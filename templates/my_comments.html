@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Мои комментарии к посту</title>
+</head>
+<body>
+  <h2>Мои комментарии к посту</h2>
+  <input type="number" id="get_comments_post_id" placeholder="ID поста"><br>
+  <button onclick="getComments()">Показать мои комментарии</button>
+  <pre id="comments_result"></pre>
+  <script>
+    function getToken() {
+      return localStorage.getItem('jwt_token') || '';
+    }
+    async function getComments() {
+      const postId = document.getElementById('get_comments_post_id').value;
+      const response = await fetch(`/api/posts/${postId}/comments/`, {
+        headers: {'Authorization': 'Bearer ' + getToken()}
+      });
+      document.getElementById('comments_result').innerText = await response.text();
+    }
+  </script>
+</body>
+</html>

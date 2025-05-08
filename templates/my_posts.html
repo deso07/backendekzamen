@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Мои посты</title>
+</head>
+<body>
+  <h2>Мои посты</h2>
+  <button onclick="getPosts()">Показать мои посты</button>
+  <pre id="posts_result"></pre>
+  <script>
+    function getToken() {
+      return localStorage.getItem('jwt_token') || '';
+    }
+    async function getPosts() {
+      const response = await fetch('/api/posts/', {
+        headers: {'Authorization': 'Bearer ' + getToken()}
+      });
+      document.getElementById('posts_result').innerText = await response.text();
+    }
+  </script>
+</body>
+</html>
